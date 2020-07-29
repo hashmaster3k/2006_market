@@ -28,4 +28,17 @@ class Market
     end
     result.flatten.uniq.sort
   end
+
+  def overstocked_items
+    result = Hash.new{|hash, name| hash[name] = {}}
+    @vendors.each do |vendor|
+      vendor.inventory.each do |item|
+        result[item[0]] = {vc: vendors_that_sell(item[0]).length,
+                                ia: item[1]}
+      end
+    end
+    result.find {|item| item[1][:vc] >= 2 && item[1][:ia] > 50}.first
+  end
+
+
 end
