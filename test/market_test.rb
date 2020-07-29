@@ -189,4 +189,10 @@ class MarketTest < Minitest::Test
 
     assert_equal expected, market.total_inventory
   end
+
+  def test_has_date
+    market = Market.new("South Pearl Street Farmers Market")
+
+    assert_equal "29/07/2020", market.date
+  end
 end
