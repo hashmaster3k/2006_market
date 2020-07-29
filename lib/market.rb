@@ -34,10 +34,31 @@ class Market
     @vendors.each do |vendor|
       vendor.inventory.each do |item|
         result[item[0]] = {vc: vendors_that_sell(item[0]).length,
-                                ia: item[1]}
+                           ia: item[1]}
       end
     end
     result.find {|item| item[1][:vc] >= 2 && item[1][:ia] > 50}.first
+  end
+
+  def total_inventory
+    result = Hash.new{|hash, name| hash[name] = {}}
+    @vendors.each do |vendor|
+      vendor.inventory.each do |item|
+        result[item[0]] = {quantity: get_total_items(item),
+                           vendors: vendors_that_sell(item[0])}
+      end
+    end
+    result
+  end
+
+  def get_total_items(given)
+    total = 0
+    @vendors.each do |vendor|
+      vendor.inventory.each do |item|
+        total += item[1]if given[0] == item[0]
+      end
+    end
+    total
   end
 
 
