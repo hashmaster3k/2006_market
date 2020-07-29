@@ -62,11 +62,25 @@ class Market
     total = 0
     @vendors.each do |vendor|
       vendor.inventory.each do |item|
-        total += item[1]if given[0] == item[0]
+        total += item[1] if given[0] == item[0]
       end
     end
     total
   end
 
+  def sell(item, amount)
+    if get_total_items([item, 0]) < amount
+      false
+    else
+      remove_quantity(item, amount)
+      true
+    end
+  end
+
+  def remove_quantity(item, number)
+    @vendors.each do |vendor|
+      require "pry"; binding.pry
+    end
+  end
 
 end
